@@ -1,4 +1,4 @@
-package usecase
+package usecaseLogin
 
 import (
 	model "github.com/firmanJS/boilerplate-gin/model"

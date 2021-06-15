@@ -1,6 +1,6 @@
-package usecase
+package usecaseLogin
 
 type InputLogin struct {
-	Username string `json:"username" validate:"required,username"`
+	Username string `json:"username" validate:"required"`
 	Password string `json:"password" validate:"required"`
 }

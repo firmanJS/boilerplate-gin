@@ -1,4 +1,4 @@
-package usecaseLogin
+package usecaseRegister
 
 import (
 	model "github.com/firmanJS/boilerplate-gin/model"
@@ -7,36 +7,38 @@ import (
 )
 
 type Repository interface {
-	LoginRepository(input *model.EntityUsers) (*model.EntityUsers, string)
+	RegisterRepository(input *model.EntityUsers) (*model.EntityUsers, string)
 }
 
 type repository struct {
 	db *gorm.DB
 }
 
-func NewRepositoryLogin(db *gorm.DB) *repository {
+func NewRepositoryRegister(db *gorm.DB) *repository {
 	return &repository{db: db}
 }
 
-func (r *repository) LoginRepository(input *model.EntityUsers) (*model.EntityUsers, string) {
+func (r *repository) RegisterRepository(input *model.EntityUsers) (*model.EntityUsers, string) {
 
 	var users model.EntityUsers
 	db := r.db.Model(&users)
 	errorCode := make(chan string, 1)
 
-	users.Username = input.Username
-	users.Password = input.Password
-
 	checkUserAccount := db.Debug().Select("*").Where("username = ?", input.Username).Find(&users)
 
-	if checkUserAccount.RowsAffected < 1 {
-		errorCode <- util.NOT_FOUND
+	if checkUserAccount.RowsAffected > 0 {
+		errorCode <- util.CONFLICT
 		return &users, <-errorCode
 	}
 
-	comparePassword := util.ComparePassword(users.Password, input.Password)
+	users.Username = input.Username
+	users.Password = input.Password
 
-	if comparePassword != nil {
+	addNewUser := db.Debug().Create(&users)
+
+	db.Commit()
+
+	if addNewUser.Error != nil {
 		errorCode <- util.FAILED
 		return &users, <-errorCode
 	} else {
