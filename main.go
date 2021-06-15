@@ -32,17 +32,17 @@ func main() {
 
 func SetupRouter() *gin.Engine {
 	/*
-	    @description Setup Database Connection
+	   @description Setup Database Connection
 	*/
 	db := config.Connection()
-	
-    /*
-	    @description Init Router
+
+	/*
+	   @description Init Router
 	*/
 	router := gin.Default()
-	
-    /*
-	    @description Setup Mode Application
+
+	/*
+	   @description Setup Mode Application
 	*/
 	config, err := config.NewConfig()
 	if err != nil {
@@ -56,9 +56,9 @@ func SetupRouter() *gin.Engine {
 	} else {
 		gin.SetMode(gin.ReleaseMode)
 	}
-	
-    /*
-	    @description Setup Middleware
+
+	/*
+	   @description Setup Middleware
 	*/
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:  []string{"*"},
@@ -68,9 +68,9 @@ func SetupRouter() *gin.Engine {
 	}))
 	router.Use(helmet.Default())
 	router.Use(gzip.Gzip(gzip.BestCompression))
-	
-    /**
-	    @description Init All Route
+
+	/**
+	  @description Init All Route
 	*/
 	route.InitAuthRoutes(db, router)
 	route.InitRoute(router)
