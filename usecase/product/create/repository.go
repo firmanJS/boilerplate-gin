@@ -7,7 +7,7 @@ import (
 )
 
 type Repository interface {
-	CreateProductRepository(input *model.EntityProduct) (*model.EntityProduct, string)
+	CreateProductRepository(input *model.EntityProduct) (*model.EntityProduct, *util.CatchError)
 }
 
 type repository struct {
@@ -18,7 +18,7 @@ func NewRepositoryCreate(db *gorm.DB) *repository {
 	return &repository{db: db}
 }
 
-func (r *repository) CreateProductRepository(input *model.EntityProduct) (*model.EntityProduct, string) {
+func (r *repository) CreateProductRepository(input *model.EntityProduct) (*model.EntityProduct, *util.CatchError) {
 
 	var products model.EntityProduct
 	db := r.db.Model(&products)
@@ -27,8 +27,11 @@ func (r *repository) CreateProductRepository(input *model.EntityProduct) (*model
 	checkProductExist := db.Debug().Select("id_product").Where("id_product = ?", input.Id_Product).Find(&products)
 
 	if checkProductExist.RowsAffected > 0 {
-		errorCode <- util.CONFLICT
-		return &products, <-errorCode
+		return &products, &util.CatchError{
+			Code:    util.CONFLICT,
+			Message: checkProductExist.Error.Error(),
+		}
+
 	}
 
 	products.Id_Product = input.Id_Product
@@ -40,11 +43,13 @@ func (r *repository) CreateProductRepository(input *model.EntityProduct) (*model
 	db.Commit()
 
 	if addNewProduct.Error != nil {
-		errorCode <- util.FAILED
-		return &products, <-errorCode
+		return &products, &util.CatchError{
+			Code:    util.FAILED,
+			Message: addNewProduct.Error.Error(),
+		}
 	} else {
 		errorCode <- "nil"
 	}
 
-	return &products, <-errorCode
+	return &products, &util.CatchError{}
 }

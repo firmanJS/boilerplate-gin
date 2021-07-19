@@ -26,6 +26,8 @@ func Auth() gin.HandlerFunc {
 		errorResponse.Message = "Authorization is required for this endpoint"
 
 		if ctx.GetHeader("Authorization") == "" {
+            // ctx.JSON(http.StatusForbidden, errorResponse)
+			// defer ctx.AbortWithStatus(http.StatusForbidden)
             util.APIResponse(ctx, http.StatusUnauthorized, errorResponse.Message, errorResponse)
 		}
 
