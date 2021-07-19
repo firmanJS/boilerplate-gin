@@ -23,6 +23,7 @@ func APIResponse(ctx *gin.Context, StatusCode int, Message string, Data interfac
 		ctx.JSON(StatusCode, jsonResponse)
 	}
 }
+
 type CatchError struct {
 	Message string  `json:"message"`
 	Code    string `json:"code"`
