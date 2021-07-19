@@ -6,3 +6,7 @@ type InputCreateProduct struct {
 	Price      int    `json:"price" validate:"required"`
 	Quantity   int    `json:"quantity" validate:"required"`
 }
+
+type InputDeleteProduct struct {
+	Id string `validate:"required,uuid"`
+}

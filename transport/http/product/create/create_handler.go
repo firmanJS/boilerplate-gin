@@ -32,11 +32,11 @@ func (h *handler) CreateProductHandler(ctx *gin.Context) {
 		switch err.Code {
 
 		case util.CONFLICT:
-			util.APIResponse(ctx, http.StatusConflict, "ID Product already exist", nil)
+			util.APIResponse(ctx, http.StatusConflict, err.Message, nil)
 			return
 
 		case util.FAILED:
-			util.APIResponse(ctx, http.StatusForbidden, err.Message, nil)
+			util.APIResponse(ctx, http.StatusBadRequest, err.Message, nil)
 			return
 
 		default:

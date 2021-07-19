@@ -22,16 +22,14 @@ func (r *repository) CreateProductRepository(input *model.EntityProduct) (*model
 
 	var products model.EntityProduct
 	db := r.db.Model(&products)
-	errorCode := make(chan string, 1)
 
 	checkProductExist := db.Debug().Select("id_product").Where("id_product = ?", input.Id_Product).Find(&products)
 
 	if checkProductExist.RowsAffected > 0 {
 		return &products, &util.CatchError{
 			Code:    util.CONFLICT,
-			Message: checkProductExist.Error.Error(),
+			Message: "ID Product already exist",
 		}
-
 	}
 
 	products.Id_Product = input.Id_Product
@@ -47,8 +45,6 @@ func (r *repository) CreateProductRepository(input *model.EntityProduct) (*model
 			Code:    util.FAILED,
 			Message: addNewProduct.Error.Error(),
 		}
-	} else {
-		errorCode <- "nil"
 	}
 
 	return &products, &util.CatchError{}
