@@ -3,11 +3,11 @@ package createProduct
 import (
 	model "github.com/firmanJS/boilerplate-gin/model"
 	structs "github.com/firmanJS/boilerplate-gin/usecase/product"
-	utils "github.com/firmanJS/boilerplate-gin/util"
+	util "github.com/firmanJS/boilerplate-gin/util"
 )
 
 type Service interface {
-	CreateProductService(input *structs.InputCreateProduct) (*model.EntityProduct, *utils.CatchError)
+	CreateProductService(input *structs.InputCreateProduct) (*model.EntityProduct, *util.CatchError)
 }
 
 type service struct {
@@ -18,7 +18,7 @@ func NewServiceCreate(repository Repository) *service {
 	return &service{repository: repository}
 }
 
-func (s *service) CreateProductService(input *structs.InputCreateProduct) (*model.EntityProduct, *utils.CatchError) {
+func (s *service) CreateProductService(input *structs.InputCreateProduct) (*model.EntityProduct, *util.CatchError) {
 
 	products := model.EntityProduct{
 		Id_Product: input.Id_Product,
