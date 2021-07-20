@@ -26,7 +26,7 @@ func InitProductRoutes(db *gorm.DB, route *gin.Engine) {
 	readProductService := readProduct.NewServiceRead(readProductRepository)
 	readProductHandler := handlerReadProduct.NewHandlerReadProduct(readProductService)
 
-    updateProductRepository := updateProduct.NewRepositoryUpdate(db)
+	updateProductRepository := updateProduct.NewRepositoryUpdate(db)
 	updateProductService := updateProduct.NewServiceUpdate(updateProductRepository)
 	updateProductHandler := handlerUpdateProduct.NewHandlerUpdateProduct(updateProductService)
 

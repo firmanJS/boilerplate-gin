@@ -2,6 +2,7 @@ package usecaseLogin
 
 import (
 	model "github.com/firmanJS/boilerplate-gin/model"
+
 	structs "github.com/firmanJS/boilerplate-gin/usecase/auth"
 )
 
