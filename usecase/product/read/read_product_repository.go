@@ -33,7 +33,7 @@ func (r *repository) ReadProductRepository() (*[]model.EntityProduct, *util.Catc
 	} else {
 		return &products, &util.CatchError{
 			Code:    "",
-			Message: "Data Deleted",
+			Message: "success",
 		}
 	}
 }

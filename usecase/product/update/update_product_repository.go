@@ -35,11 +35,12 @@ func (r *repository) UpdateProductRepository(input *model.EntityProduct) (*model
 	}
 
 	products.Name = input.Name
+	products.Id_Product = input.Id_Product
 	products.Price = input.Price
 	products.Quantity = input.Quantity
 
 	updateProduct := db.Debug().Select("name", "price", "quantity", "updated_at").Where("id = ?", input.Id).Updates(products)
-
+    
 	if updateProduct.Error != nil {
 		return &products, &util.CatchError{
 			Code:    util.FAILED,
