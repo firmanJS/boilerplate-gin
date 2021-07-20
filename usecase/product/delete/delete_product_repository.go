@@ -40,9 +40,9 @@ func (r *repository) DeletedProductRepository(input *model.EntityProduct) (*mode
 			Message: deletedProductId.Error.Error(),
 		}
 	} else {
-        return &products, &util.CatchError{
+		return &products, &util.CatchError{
 			Code:    "",
 			Message: "Data Deleted",
 		}
-    }	
+	}
 }

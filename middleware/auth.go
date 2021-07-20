@@ -26,9 +26,9 @@ func Auth() gin.HandlerFunc {
 		errorResponse.Message = "Authorization is required for this endpoint"
 
 		if ctx.GetHeader("Authorization") == "" {
-            // ctx.JSON(http.StatusForbidden, errorResponse)
+			// ctx.JSON(http.StatusForbidden, errorResponse)
 			// defer ctx.AbortWithStatus(http.StatusForbidden)
-            util.APIResponse(ctx, http.StatusUnauthorized, errorResponse.Message, errorResponse)
+			util.APIResponse(ctx, http.StatusUnauthorized, errorResponse.Message, errorResponse)
 		}
 
 		token, err := util.VerifyTokenHeader(ctx, "JWT_SECRET")
@@ -39,7 +39,7 @@ func Auth() gin.HandlerFunc {
 		errorResponse.Message = "accessToken invalid or expired"
 
 		if err != nil {
-            util.APIResponse(ctx, http.StatusUnauthorized, errorResponse.Message, errorResponse)
+			util.APIResponse(ctx, http.StatusUnauthorized, errorResponse.Message, errorResponse)
 		} else {
 			// global value result
 			ctx.Set("user", token.Claims)

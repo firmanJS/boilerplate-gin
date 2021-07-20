@@ -25,15 +25,15 @@ func (r *repository) ReadProductRepository() (*[]model.EntityProduct, *util.Catc
 
 	ReadProducts := db.Debug().Select("id, id_product, name, price, quantity, created_at, updated_at").Find(&products)
 
-    if ReadProducts.Error != nil {
+	if ReadProducts.Error != nil {
 		return &products, &util.CatchError{
 			Code:    util.FAILED,
 			Message: ReadProducts.Error.Error(),
 		}
 	} else {
-        return &products, &util.CatchError{
+		return &products, &util.CatchError{
 			Code:    "",
 			Message: "Data Deleted",
 		}
-    }	
+	}
 }

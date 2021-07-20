@@ -2,10 +2,11 @@ package usecaseLogin
 
 import (
 	model "github.com/firmanJS/boilerplate-gin/model"
+	structs "github.com/firmanJS/boilerplate-gin/usecase/auth"
 )
 
 type Service interface {
-	LoginService(input *InputLogin) (*model.EntityUsers, string)
+	LoginService(input *structs.InputLogin) (*model.EntityUsers, string)
 }
 
 type service struct {
@@ -16,7 +17,7 @@ func NewServiceLogin(repository Repository) *service {
 	return &service{repository: repository}
 }
 
-func (s *service) LoginService(input *InputLogin) (*model.EntityUsers, string) {
+func (s *service) LoginService(input *structs.InputLogin) (*model.EntityUsers, string) {
 
 	user := model.EntityUsers{
 		Username: input.Username,
