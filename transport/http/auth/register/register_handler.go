@@ -3,10 +3,9 @@ package registerhandler
 import (
 	"net/http"
 
-	structs "github.com/firmanJS/boilerplate-gin/usecase/auth"
-
-	registerAuth "github.com/firmanJS/boilerplate-gin/usecase/auth/register"
-	util "github.com/firmanJS/boilerplate-gin/util"
+	"github.com/firmanJS/boilerplate-gin/model"
+	"github.com/firmanJS/boilerplate-gin/usecase/auth/register"
+	"github.com/firmanJS/boilerplate-gin/util"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/sirupsen/logrus"
@@ -14,16 +13,16 @@ import (
 )
 
 type handler struct {
-	service registerAuth.Service
+	service register.Service
 }
 
-func NewHandlerRegister(service registerAuth.Service) *handler {
+func NewHandlerRegister(service register.Service) *handler {
 	return &handler{service: service}
 }
 
 func (h *handler) RegisterHandler(ctx *gin.Context) {
 
-	var input structs.InputRegister
+	var input model.InputRegister
 	ctx.ShouldBindJSON(&input)
 
 	if err := validator.New().Struct(input); err != nil {

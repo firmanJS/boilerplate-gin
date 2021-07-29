@@ -1,8 +1,8 @@
-package usecaseLogin
+package login
 
 import (
-	model "github.com/firmanJS/boilerplate-gin/model"
-	util "github.com/firmanJS/boilerplate-gin/util"
+	"github.com/firmanJS/boilerplate-gin/model"
+	"github.com/firmanJS/boilerplate-gin/util"
 	"gorm.io/gorm"
 )
 

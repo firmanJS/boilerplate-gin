@@ -3,25 +3,25 @@ package loginHandler
 import (
 	"net/http"
 
-	structs "github.com/firmanJS/boilerplate-gin/usecase/auth"
-	loginAuth "github.com/firmanJS/boilerplate-gin/usecase/auth/login"
-	util "github.com/firmanJS/boilerplate-gin/util"
+	"github.com/firmanJS/boilerplate-gin/model"
+	"github.com/firmanJS/boilerplate-gin/usecase/auth/login"
+	"github.com/firmanJS/boilerplate-gin/util"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/sirupsen/logrus"
 )
 
 type handler struct {
-	service loginAuth.Service
+	service login.Service
 }
 
-func NewHandlerLogin(service loginAuth.Service) *handler {
+func NewHandlerLogin(service login.Service) *handler {
 	return &handler{service: service}
 }
 
 func (h *handler) LoginHandler(ctx *gin.Context) {
 
-	var input structs.InputLogin
+	var input model.InputLogin
 	ctx.ShouldBindJSON(&input)
 
 	if err := validator.New().Struct(input); err != nil {
