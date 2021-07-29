@@ -1,25 +1,25 @@
-package loginHandler
+package authHandler
 
 import (
 	"net/http"
 
 	"github.com/firmanJS/boilerplate-gin/model"
-	"github.com/firmanJS/boilerplate-gin/usecase/auth/login"
 	"github.com/firmanJS/boilerplate-gin/util"
+	"github.com/firmanJS/boilerplate-gin/usecase/auth"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/sirupsen/logrus"
 )
 
-type handler struct {
-	service login.Service
+type handlerLogin struct {
+	service auth.ServiceLogin
 }
 
-func NewHandlerLogin(service login.Service) *handler {
-	return &handler{service: service}
+func NewHandlerLogin(service auth.ServiceLogin) *handlerLogin {
+	return &handlerLogin{service: service}
 }
 
-func (h *handler) LoginHandler(ctx *gin.Context) {
+func (h *handlerLogin) LoginHandler(ctx *gin.Context) {
 
 	var input model.InputLogin
 	ctx.ShouldBindJSON(&input)
