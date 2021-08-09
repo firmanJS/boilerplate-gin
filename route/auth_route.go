@@ -1,8 +1,8 @@
 package route
 
 import (
-	handlerLogin "github.com/firmanJS/boilerplate-gin/transport/http/auth/login"
-	loginAuth "github.com/firmanJS/boilerplate-gin/usecase/auth/login"
+	"github.com/firmanJS/boilerplate-gin/transport/http"
+	"github.com/firmanJS/boilerplate-gin/usecase/auth"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 )
@@ -10,16 +10,20 @@ import (
 func InitAuthRoutes(db *gorm.DB, route *gin.Engine) {
 
 	/**
-	@description All Handler Auth
+	  @description All Handler Auth
 	*/
-	LoginRepository := loginAuth.NewRepositoryLogin(db)
-	loginService := loginAuth.NewServiceLogin(LoginRepository)
-	loginHandler := handlerLogin.NewHandlerLogin(loginService)
+	LoginRepository := auth.NewRepositoryLogin(db)
+	loginService := auth.NewServiceLogin(LoginRepository)
+	loginHandler := http.NewHandlerLogin(loginService)
+	registerRepository := auth.NewRepositoryRegister(db)
+	registerService := auth.NewServiceRegister(registerRepository)
+	registerHandler := http.NewHandlerRegister(registerService)
 
 	/**
 	@description All Auth Route
 	*/
 	groupRoute := route.Group("/api/v1")
+	groupRoute.POST("/register", registerHandler.RegisterHandler)
 	groupRoute.POST("/login", loginHandler.LoginHandler)
 
 }

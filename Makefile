@@ -18,3 +18,6 @@ gotest:
 
 goformat:
 	${GO} fmt ./...
+
+# golint:
+#     ${GO} gofmt -s

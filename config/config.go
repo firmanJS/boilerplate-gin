@@ -17,10 +17,10 @@ func init() {
 }
 
 type Config struct {
-	GO_PORT       int
-	GO_ENV        string
-	DB_URI        string
-	GO_DEBUG      bool
+	GO_PORT  int
+	GO_ENV   string
+	DB_URI   string
+	GO_DEBUG bool
 }
 
 func NewConfig() (defConfig *Config, err error) {

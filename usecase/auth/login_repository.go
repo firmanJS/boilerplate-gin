@@ -1,24 +1,24 @@
-package usecase
+package auth
 
 import (
-	model "github.com/firmanJS/boilerplate-gin/model"
-	util "github.com/firmanJS/boilerplate-gin/util"
+	"github.com/firmanJS/boilerplate-gin/model"
+	"github.com/firmanJS/boilerplate-gin/util"
 	"gorm.io/gorm"
 )
 
-type Repository interface {
+type RepositoryLogin interface {
 	LoginRepository(input *model.EntityUsers) (*model.EntityUsers, string)
 }
 
-type repository struct {
+type repositoryLogin struct {
 	db *gorm.DB
 }
 
-func NewRepositoryLogin(db *gorm.DB) *repository {
-	return &repository{db: db}
+func NewRepositoryLogin(db *gorm.DB) *repositoryLogin {
+	return &repositoryLogin{db: db}
 }
 
-func (r *repository) LoginRepository(input *model.EntityUsers) (*model.EntityUsers, string) {
+func (r *repositoryLogin) LoginRepository(input *model.EntityUsers) (*model.EntityUsers, string) {
 
 	var users model.EntityUsers
 	db := r.db.Model(&users)
