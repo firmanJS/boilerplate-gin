@@ -1,24 +1,24 @@
-package usecaseRegister
+package auth
 
 import (
-	model "github.com/firmanJS/boilerplate-gin/model"
-	util "github.com/firmanJS/boilerplate-gin/util"
+	"github.com/firmanJS/boilerplate-gin/model"
+	"github.com/firmanJS/boilerplate-gin/util"
 	"gorm.io/gorm"
 )
 
-type Repository interface {
+type RepositoryRegister interface {
 	RegisterRepository(input *model.EntityUsers) (*model.EntityUsers, string)
 }
 
-type repository struct {
+type repositoryRegister struct {
 	db *gorm.DB
 }
 
-func NewRepositoryRegister(db *gorm.DB) *repository {
-	return &repository{db: db}
+func NewRepositoryRegister(db *gorm.DB) *repositoryRegister {
+	return &repositoryRegister{db: db}
 }
 
-func (r *repository) RegisterRepository(input *model.EntityUsers) (*model.EntityUsers, string) {
+func (r *repositoryRegister) RegisterRepository(input *model.EntityUsers) (*model.EntityUsers, string) {
 
 	var users model.EntityUsers
 	db := r.db.Model(&users)

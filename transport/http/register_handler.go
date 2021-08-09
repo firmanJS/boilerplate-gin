@@ -3,25 +3,26 @@ package http
 import (
 	"net/http"
 
-	registerAuth "github.com/firmanJS/boilerplate-gin/usecase/auth/register"
-	util "github.com/firmanJS/boilerplate-gin/util"
+	"github.com/firmanJS/boilerplate-gin/model"
+	"github.com/firmanJS/boilerplate-gin/usecase/auth"
+	"github.com/firmanJS/boilerplate-gin/util"
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
-type handler struct {
-	service registerAuth.Service
+type handlerRegister struct {
+	service auth.ServiceRegister
 }
 
-func NewHandlerRegister(service registerAuth.Service) *handler {
-	return &handler{service: service}
+func NewHandlerRegister(service auth.ServiceRegister) *handlerRegister {
+	return &handlerRegister{service: service}
 }
 
-func (h *handler) RegisterHandler(ctx *gin.Context) {
+func (h *handlerRegister) RegisterHandler(ctx *gin.Context) {
 
-	var input registerAuth.InputRegister
+	var input model.InputRegister
 	ctx.ShouldBindJSON(&input)
 
 	if err := validator.New().Struct(input); err != nil {
